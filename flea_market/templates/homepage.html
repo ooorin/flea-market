@@ -1,0 +1,466 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>贰经人手&nbsp岁月拾遗</title>
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/agency.css' %}" rel="stylesheet">
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">贰&nbsp拾</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav text-uppercase ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#services">二手服务</a>
+            </li>
+            <!--
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#tengfei">腾飞服务</a>
+            </li>
+            -->
+            {% if is_login %}
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#team">关于我们</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger">&nbsp</a>
+            </li>
+            {% if is_login %}
+            {% if count %}
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <span class="badge badge-danger">{{ count }}+</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown" style="background-color: #212529">
+                {% for message in message_unread %}
+                <a class="nav-link js-scroll-trigger" id="message{{message.id}}" href="{% url 'comment' message.goods.id %}">{{ message.content }}</a>
+                {% endfor %}
+              </div>
+            </li>
+            {% endif %}
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user-circle fa-fw"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown" style="background-color: #212529">
+                <a class="nav-link js-scroll-trigger" href="{% url 'user_center' %}">个人中心</a>
+                <div class="dropdown-divider"></div>
+                <a class="nav-link js-scroll-trigger" href="/logout">退出</a>
+              </div>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="/register">注册</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="/login">登录</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="masthead">
+      <div class="container">
+        <div class="intro-text">
+          {% if is_login %}
+          <div class="intro-heading text-uppercase">贰经人手&nbsp岁月拾遗</div>
+          <div class="intro-lead-in">{{ user_profile.family_name }}{{ user_profile.given_name }}&nbsp很高兴遇见你</div>
+          {% else %}
+          <div class="intro-heading text-uppercase">贰经人手&nbsp岁月拾遗</div>
+          <div class="intro-lead-in">我们是一群二十岁的年轻人</div>
+          {% endif %}
+          <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">&nbsp了&nbsp&nbsp解&nbsp&nbsp更&nbsp&nbsp多&nbsp</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Services -->
+    <section id="services">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">二手服务</h2>
+
+            <h3 class="section-subheading text-muted">很高兴可以为你提供帮助</h3>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col-md-4">
+          	<a href="{% url 'goods' 0 %}">
+            <span class="fa-stack fa-4x">
+              <i class="fas fa-circle fa-stack-2x text-primary"></i>
+              <i class="fas fa-magic fa-stack-1x fa-inverse"></i>
+            </span>
+            <h4 class="service-heading">出售</h4>
+            </a>
+            <p class="text-muted">&nbsp</p>
+          </div>
+          <div class="col-md-4">
+          	<a href="{% url 'goods' 1 %}">
+            <span class="fa-stack fa-4x">
+              <i class="fas fa-circle fa-stack-2x text-primary"></i>
+              <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
+            </span>
+            <h4 class="service-heading">求购</h4>
+        	</a>
+            <p class="text-muted">&nbsp</p>
+          </div>
+          <div class="col-md-4">
+          	<a href="{% url 'goods' 2 %}">
+            <span class="fa-stack fa-4x">
+              <i class="fas fa-circle fa-stack-2x text-primary"></i>
+              <i class="fas fa-gift fa-stack-1x fa-inverse"></i>
+            </span>
+            <h4 class="service-heading">赠送</h4>
+            </a>
+            <p class="text-muted">&nbsp</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TengFei
+    <section class="bg-light" id="tengfei">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">腾飞服务</h2>
+            <h3 class="section-subheading text-muted">由衷感谢腾飞书院的大力支持</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="team-member">
+              
+              <img class="mx-auto rounded-circle" src="{% static 'img/book_borrow.jpg' %}" alt="">
+              </a>
+              <h4>图书借阅</h4>
+              <p class="text-muted">腾飞书院图书借阅</p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="team-member">
+              <a href="http://www.fdcollege.fudan.edu.cn/tfcollege/">
+              <img class="mx-auto rounded-circle" src="{% static 'img/tengfei.jpg' %}" alt="" >
+          	  </a>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="team-member">
+              
+              <img class="mx-auto rounded-circle" src="{% static 'img/book_give.jpg' %}" alt="">
+              </a>
+              <h4>旧书捐赠</h4>
+              <p class="text-muted">腾飞书院旧书捐赠</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    -->
+
+    {% if is_login %}
+    <!-- Team -->
+    <section id="team">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">关于我们</h2>
+            <h3 class="section-subheading text-muted">我们是TWTS Group 14</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="timeline">
+              <li>
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="{% static 'img/T.jpg' %}" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>2018.10.08</h4>
+                    <h4 class="subheading">第一次见面</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">HGX104</p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="{% static 'img/E.jpg' %}" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>2018.10.22</h4>
+                    <h4 class="subheading">确定项目</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">二手交易平台</p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="{% static 'img/A.jpg' %}" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>2018.11.20</h4>
+                    <h4 class="subheading">网站上线</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">贰经人手&nbsp岁月拾遗</p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="{% static 'img/M.jpg' %}" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>2018-</h4>
+                    <h4 class="subheading">网站运营</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">我们一直都在</p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image">
+                  <h4>TWTS
+                    <br>Group
+                    <br>14</h4>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <span class="copyright">Copyright &copy; TWTS-Group-14 2018</span>
+          </div> 
+          <div class="col-md-4">
+          </div>
+          <div class="col-md-4">
+            <ul class="list-inline quicklinks">
+              <li class="list-inline-item">
+                <a data-toggle="modal" href="#term">用户服务协议</a>
+              </li>
+              <!--
+              <li class="list-inline-item">
+                <a href="#">Terms of Use</a>
+              </li>
+            -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div class="portfolio-modal modal fade" id="term" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h3 class="text-uppercase">“贰拾”二手交易网站服务协议</h3>
+
+                  <p class="item-intro text-muted">第一条&nbsp&nbsp立约目的</p>
+                  <p></p>
+                  <ul class="list-inline">
+                    <li>1.1&nbsp&nbsp为了规范本网站的运营秩序，明确各方的权利义务，保障各方合法权益，特拟定本协议。</li>
+                  </ul>
+
+                  <p class="item-intro text-muted">第二条&nbsp&nbsp签约主体</p>
+                  <p></p>
+                  <ul class="list-inline">
+                    <li>2.1&nbsp&nbsp本协议由成功心理素质训练课程第十四小组与本网站用户（以下简称“您”）签署。</li>
+                  </ul>
+
+                  <p class="item-intro text-muted">第三条&nbsp&nbsp协议生效和适用范围</p>
+                  <p></p>
+                  <ul class="list-inline">
+                    <li>3.1&nbsp&nbsp您通过网络页面点击确认或以其他方式选择接受本协议，即表示您与本网站已达成协议并同意接受本协议的全部约定内容。<mark>本协议在您使用本网站期间持续有效。</mark></li>
+                  </ul>
+
+                  <p class="item-intro text-muted">第四条&nbsp&nbsp定义</p>
+                  <p></p>
+                  <ul class="list-inline">
+                    <li>4.1&nbsp&nbsp贰拾：是由成功心理素质训练课程第十四小组设计完成，旨在为校内同学提供便捷交易服务的在线闲置物品交易网站。</li>
+                  </ul>
+
+                  <p class="item-intro text-muted">第五条&nbsp&nbsp本网站授权范围</p>
+                  <p></p>
+                  <ul class="list-inline">
+                    <li>5.1&nbsp&nbsp除了您与本小组另有约定外，您同意本网站的服务仅供您个人非商业性质的使用，您不得对本网站的任何部分或对其使用及获得进行复制、拷贝、出售或利用本网站进行调查、广告或用于其他商业目的，也不得对本网站或本网站运行过程中释放在任何终端中的数据及本网站运行过程中终端与服务器端的交互数据进行复制、更改、修改、挂接运行或创作任何衍生作品，形式包括但不限于使用插件、外挂或非经授权的第三方工具/服务接入本网站及相关系统。</li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>5.2&nbsp&nbsp<mark>本小组有权根据实际情况对本网站及其相关功能进行变更、升级、修改或转移，并有权在本网站中开发新的功能或其他服务。</mark>除非有独立的协议，否则上述所有新功能、软件服务的提供仍然适用本协议。</li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>5.3&nbsp&nbsp您需要凭您的学号邮箱注册本网站。本网站仅根据你的学号邮箱确认使用本网站者的身份。您应妥善保管您的学号邮箱，并对其使用或遗失自行承担责任。<mark>如果您的学号邮箱存在未获授权的使用，或者发生其他任何安全问题时，应当立即通知本小组或联系信息办，尽快修改相关信息，保障使用安全。</mark></li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>5.4&nbsp&nbsp本小组基于本协议许可而非向您销售本网站，您仅可依照本协议约定使用本网站，我们保留未明示授予的一切权利。</li>
+                  </ul>
+
+                  <p class="item-intro text-muted">第六条&nbsp&nbsp您的承诺与保证</p>
+                  <p></p>
+                  <ul class="list-inline">
+                    <li>6.1&nbsp&nbsp您确保您在本网站发布的所有信息系您原创或已获得有效的、完全的授权、不会侵犯任何主体的肖像权、名誉权、知识产权、隐私权等合法权益。<mark>否则本网站可对您发布的信息依法或依本协议进行删除或屏蔽。</mark>您应当确保您所发布的信息（含所发表的言论及所作出的行为）不包含以下内容：</li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>(一）违反国家政策、法律法规禁止性规定的；</li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>（二）政治宣传、封建迷信、淫秽、色情、赌博、暴力、恐怖或者教唆犯罪的；</li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>（三）欺诈、虚假、不准确或存在误导性的；</li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>（四）侵犯他人知识产权或涉及第三方商业秘密或其他专有权利的；</li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>（五）侮辱、诽谤、恐吓、涉及他人隐私等侵害他人合法权益的；</li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>（六）存在可能破坏、篡改、删除、影响本网站任何系统正常运行或未经授权秘密获取本网站及其他用户的数据、个人资料的病毒、木马、爬虫等恶意软件、程序代码的；</li>
+                  </ul>
+                   <ul class="list-inline">
+                    <li>（七）其他违背社会公共利益或公共道德的。</li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>6.2&nbsp&nbsp对于您提供、发布及在使用本网站服务中形成的除个人信息外的文字、图片、视频、音频等非个人信息，您同意<mark>在法律规定的保护期限内您免费授权本网站获得许可使用权利及再授权给其他第三方使用并可以自身名义对第三方侵权行为取证及提起诉讼的权利。您同意本小组存储、使用、复制、修订、编辑、发布、展示翻译、分发您的非个人信息或制作其派生作品，并以已知或日后开发的形式、媒体或技术将上述信息纳入其他作品内。</mark></li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>6.3&nbsp&nbsp<mark>您知悉并了解闲置物品/服务交易纠纷及风险高于普通物品/服务交易，您需在本网站内对交易细节进行详细、客观的沟通约定，并遵守相应的约定事项。若因交易约定不详导致的交易纠纷，除法律另有明确规定外，由您自行承担风险。</mark></li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>6.4&nbsp&nbsp<mark>您知悉并了解线下见面交易存在较大的人身财产安全及交易纠纷风险，如因线下见面交易产生纠纷及风险，除法律另有明确规定外，由您自行承担。</mark></li>
+                  </ul>
+
+                  <p class="item-intro text-muted">第七条&nbsp&nbsp信息获取及保护</p>
+                  <p></p>
+                  <ul class="list-inline">
+                    <li>7.1&nbsp&nbsp本网站非常重视用户个人信息（即能够独立或与其他信息结合后识别用户身份的信息）的保护，在适用法律允许的范围内，为向您提供更安全的服务，<mark>本网站可能为安全目的采用必要的技术手段获取您在使用本网站过程中的相关信息。</mark></li>
+                  </ul>
+
+                  <p class="item-intro text-muted">第八条&nbsp&nbsp免责及有限责任</p>
+                  <p></p>
+                  <ul class="list-inline">
+                    <li>8.1&nbsp&nbsp本协议项下的服务按“现状”和按“可得到”的状态提供，本网站将在现有技术的基础上尽最大的努力提供相应的安全措施以保障服务安全和正常运行。但由于可能存在的计算机病毒、网络通讯故障、系统维护等方面的因素以及可能发生的不可抗力事件，<mark>本网站在此明确声明，对上述原因造成的损失我们不向您承担除法律有明确规定外的责任。</mark></li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>8.2&nbsp&nbsp本协议的签署并不意味着本网站对您的注册身份、资质、履约能力、服务等行为或您自行上传、发布或提交的信息、作品的真实性、准确性、合法性、有效性承担任何明示或暗示的保证或担保等责任、也不意味着本网站成为您与其他网站用户之间交易的参与方，本网站亦无义务参与与交易有关的任何纠纷处理等活动。<mark>除法律有明确规定外，因您的行为导致的任何投诉、纠纷、争议、赔偿等您应以自己的名义独立承担所有法律责任。</mark></li>
+                  </ul>
+
+                  <p class="item-intro text-muted">第九条&nbsp&nbsp知识产权</p>
+                  <p></p>
+                  <ul class="list-inline">
+                    <li>9.1&nbsp&nbsp您可以在单台或者多台计算机、终端机、工作站（下统称“计算机”）及移动互联网设备上安装、使用、浏览、运行本网站及许可软件。</li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>9.2&nbsp&nbsp本网站的一切版权、商标权、专利权、商业秘密以及与本网站有关的所有信息内容，包括但不限于：文字表述及其组合、图标、图饰、图表、色彩、界面设计、版面框架、有关数据、印刷材料、或电子文档等均受中华人民共和国著作权法、商标法、专利法、反不正当竞争法和相应的国际条约以及其他知识产权法律法规的保护，除涉及第三方授权的软件或技术外，本小组享有上述知识产权。未经本小组书面同意，您不得为任何营利性或非营利性的目的自行实施、利用、转让或许可任何三方实施、利用、转让上述知识产权。本小组保留追究上述未经许可行为的权利。</li>
+                  </ul>
+
+                  <p class="item-intro text-muted">第十条&nbsp&nbsp协议终止和违约责任</p>
+                  <p></p>
+                  <ul class="list-inline">
+                    <li>10.1&nbsp&nbsp您应理解按本协议约定规范使用本网站，按本协议约定履行义务是您使用本网站及相关服务的前提，<mark>如您严重违反本协议，本小组将终止提供服务，本协议终止。</mark></li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>10.2&nbsp&nbsp在本使用许可终止时，您应停止对许可软件的使用行为，并销毁许可软件的全部副本。您在协议终止前的行为所导致的任何责任，您应完全且独立地承担；协议终止后，本小组无需继续提供服务。</li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>10.3&nbsp&nbsp如您违反本协议约定的条款，给本网站或其他用户造成损失，您必须承担全部的赔偿责任。<mark>如本网站因此向第三方进行了赔偿或补偿，则您同意赔偿本小组的相关支出和损失。</mark></li>
+                  </ul>
+
+                  <p class="item-intro text-muted">第十一条&nbsp&nbsp其他约定</p>
+                  <p></p>
+                  <ul class="list-inline">
+                    <li>11.1&nbsp&nbsp任一方未经对方同意，不得将协议权利义务转让第三方。<mark>本网站可给予服务需要，变更或增加履约主体，此等变更不会影响您在本协议项下的权益。如您继续使用本网站服务的，视为同意变更后的主体或新增的主体作为与您履约的相对方。</mark></li>
+                  </ul>
+                  <ul class="list-inline">
+                    <li>11.2&nbsp&nbsp本协议适用中华人民共和国大陆地区法律。因本小组与您就本协议的签订、履行或解释发生争议，各方应努力友好协商解决。如协商不成，您同意<mark>由复旦大学校方、成功心理素质训练课程指导老师</mark>进行争议解决或由<mark>被告住所地有管辖权的人民法院</mark>审理各方的纠纷或争议。</li>
+                  </ul>
+
+                  <button class="btn btn-primary btn-xl" data-dismiss="modal" type="button">
+                    <h6>我&nbsp&nbsp知&nbsp&nbsp道&nbsp&nbsp了</h6>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Contact form JavaScript -->
+    <script src="{% static 'js/jqBootstrapValidation.js' %}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="{% static 'js/agency.js' %}"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,269 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>贰经人手&nbsp岁月拾遗</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/business-casual.css' %}" rel="stylesheet">
+    <link href="{% static 'css/stylish-portfolio.css' %}" rel="stylesheet">
+    <link href="{% static 'css/resume.css' %}" rel="stylesheet">
+    <link href="{% static 'css/agency.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/cropper.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    
+  </head>
+
+  <body id="page-top">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+      <h4><a href="/"><i class="fas fa-home">&nbsp贰&nbsp拾</i></a></h4>
+      <a class="navbar-brand js-scroll-trigger" href="{% url 'user_center' %}">
+        <h4><span class="d-block d-lg-none">{{ user.family_name }} {{ user.given_name }}</span></h4>
+        <span class="d-none d-lg-block">
+          {% if user.avatar %}
+          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{{ user.avatar.url }}" alt="">
+          {% else %}
+          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'img/default_avatar.jpg' %}" alt="">
+          {% endif %}
+        </span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <h4><a class="nav-link js-scroll-trigger" href="{% url 'user_center' %}#about">个人资料</a></h4>
+          </li>
+          <li class="nav-item">
+            <h4><a class="nav-link js-scroll-trigger" href="{% url 'user_center' %}#recent-sell">最近交易</a></h4>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+      	<div class="col-lg-12 text-center">
+      	  <h3>&nbsp</h3>
+      	  <h2 class="section-heading text-uppercase">发布交易</h2>
+      	  <h3 class="section-subheading text-muted">发布一份新的交易</h3>
+      	</div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            &nbsp
+          </div>
+          <div class="img-container">
+            <img src="{% static 'img/transparent.png' %}" alt="Picture">
+          </div>
+          <div class="row">
+            <div class="col-md-9 docs-buttons">
+              <!-- <h3 class="page-header">Toolbar:</h3> -->
+              <div class="btn-group">
+                <button class="btn btn-primary" data-method="zoom" data-option="0.1" type="button" title="Zoom In">
+                  <span class="docs-tooltip" data-toggle="tooltip" title="放大">
+                    <i class="fas fa-search-plus"></i>
+                  </span>
+                </button>
+                <button class="btn btn-primary" data-method="zoom" data-option="-0.1" type="button" title="Zoom Out">
+                  <span class="docs-tooltip" data-toggle="tooltip" title="缩小">
+                    <i class="fas fa-search-minus"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="btn-group">
+                <button class="btn btn-primary" data-method="rotate" data-option="-90" type="button" title="Rotate Left">
+                  <span class="docs-tooltip" data-toggle="tooltip" title="左旋转90度">
+                    左旋转
+                  </span>
+                </button>
+                <button class="btn btn-primary" data-method="rotate" data-option="90" type="button" title="Rotate Right">
+                  <span class="docs-tooltip" data-toggle="tooltip" title="右旋转90度">
+                    右旋转
+                  </span>
+                </button>
+              </div>
+              <div class="btn-group">
+                <button class="btn btn-primary" data-method="reset" type="button" title="Reset">
+                  <span class="docs-tooltip" data-toggle="tooltip" title="重置">
+                    重置
+                  </span>
+                </button>
+              </div>
+              <div class="btn-group btn-group-crop">
+                <button class="btn btn-primary" data-method="getCroppedCanvas" type="button">
+                  <span class="docs-tooltip" data-toggle="tooltip" title="点击预览">
+                    预览
+                  </span>
+                </button>
+              </div>
+
+              <!-- Show the cropped image in modal -->
+              <div class="modal fade docs-cropped" id="getCroppedCanvasModal" aria-hidden="true" aria-labelledby="getCroppedCanvasTitle" role="dialog" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button class="close" data-dismiss="modal" type="button" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body"></div>
+                  </div>
+                </div>
+              </div><!-- /.modal -->
+
+            </div><!-- /.docs-buttons -->
+          </div>
+        </div>
+        <div class="col-md-6">
+          <form method="post" action="{% url 'add_goods' %}" id="contactForm" name="sentMessage" enctype="multipart/form-data">
+          {% csrf_token %}
+            <div class="form-group">
+              <label for="typ">选择交易类型</label>
+              <select class="form-control" name="typ_id">
+                <option value="0">出售</option>
+                <option value="1">求购</option>
+                <option value="2">赠送</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="name">选择商品类别</label>
+              <select class="form-control" name="category">
+                {% for cat in category_list %}
+                <option>{{ cat }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <input class="form-control" id="name" type="text" name="name" placeholder="商品名称 *" required="required" maxlength="128">
+              <p class="help-block text-danger"></p>
+            </div>
+            <div class="form-group">
+              <input class="form-control" id="trade_location" type="text" name="trade_location" placeholder="交易地点 *" required="required" maxlength="32">
+              <p class="help-block text-danger"></p>
+            </div>
+            <div class="form-group">
+              <input class="form-control" id="price" type="text" name="price" placeholder="可接受价格 *" required="required" maxlength="10">
+              <p class="help-block text-danger"></p>
+            </div>
+            <div class="form-group">
+              <textarea class="form-control" id="description" name="description" placeholder="商品描述 *" required="required" rows=6 maxlength="512"></textarea>
+              <p class="help-block text-danger"></p>
+            </div>
+            <div class="form-group">
+              <input class="form-control" id="dataX" name="dataX" type="hidden" placeholder="x">
+              <input class="form-control" id="dataY" name="dataY" type="hidden" placeholder="y">
+              <input class="form-control" id="dataWidth" name="dataWidth" type="hidden" placeholder="width">
+              <input class="form-control" id="dataHeight" name="dataHeight" type="hidden" placeholder="height">
+              <input class="form-control" id="dataRotate" name="dataRotate" type="hidden" placeholder="rotate">
+            </div>
+            <div class="row">
+              <div class="col-md-9">
+                <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
+                  <input class="sr-only" id="inputImage" name="picture" type="file" accept="image/*" onchange="checkfile();">
+                  <span class="docs-tooltip" data-toggle="tooltip" title="上传图片">
+                    上传图片
+                  </span>
+                </label>
+              </div>
+              <div class="col-md-3">
+                <button class="btn btn-primary " type="submit">点击提交</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for this template -->
+    <!--<script src="../static/js/agency.js"></script>-->
+
+    <script src="{% static 'js/jqBootstrapValidation.js' %}"></script>
+    <!--<script src="../static/mail/contact_me.js"></script>-->
+
+    <script src="{% static 'js/croppie.min.js' %}"></script>
+    <script src="{% static 'js/cropper.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <script>
+        var display = true;
+        var maxsize = 5*1024*1024;//2M
+        console.log('ok');
+        var errMsg = "上传的图片大小不能超过5M！"; 
+        var typMsg = "图片格式仅支持(jpg, jpeg, png)!"; 
+        var  browserCfg = {};  
+        var ua = window.navigator.userAgent;  
+        if (ua.indexOf("MSIE") >= 1) {  
+            browserCfg.ie = true;  
+        }
+        else if (ua.indexOf("Firefox") >= 1) {  
+            browserCfg.firefox = true;  
+        }
+        else if (ua.indexOf("Chrome") >= 1) {  
+            browserCfg.chrome = true;  
+        }
+
+        function checkfile() {  
+            try {  
+                var obj_file = document.getElementById("inputImage");  
+                var filesize = 0; 
+                display = true; 
+                if (browserCfg.firefox || browserCfg.chrome ) {  
+                    filesize = obj_file.files[0].size;  
+                }
+
+                var name = obj_file.value;
+                var fileName = name.substring(name.lastIndexOf(".")+1).toLowerCase();
+                
+                if (filesize > maxsize) {  
+                    alert(errMsg);
+                    obj_file.value = "";
+                    display = false; 
+                    return false;  
+                }
+                
+                if(fileName !="jpg" && fileName !="jpeg" && fileName !="png") {
+                    alert(typMsg);
+                    obj_file.value = "";
+                    display = false;
+                    return false;
+                }
+
+            } catch(e) {  
+                alert(e);  
+            }  
+        } 
+    </script>
+
+  </body>
+
+</html>

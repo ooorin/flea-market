@@ -1,0 +1,143 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>贰经人手&nbsp岁月拾遗</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/stylish-portfolio.css' %}" rel="stylesheet">
+    <link href="{% static 'css/resume.css' %}" rel="stylesheet">
+    <link href="{% static 'css/agency.css' %}" rel="stylesheet">
+    
+
+  </head>
+
+  <body id="page-top">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+      <h4><a href="/"><i class="fas fa-home">&nbsp贰&nbsp拾</i></a></h4>
+      <a class="navbar-brand js-scroll-trigger">
+        <h4><span class="d-block d-lg-none">{{ user.family_name }}{{ user.given_name }}</span></h4>
+        <span class="d-none d-lg-block">
+          {% if user.avatar %}
+          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{{ user.avatar.url }}" alt="">
+          {% else %}
+          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'img/default_avatar.jpg' %}" alt="">
+          {% endif %}
+        </span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <h4><a class="nav-link js-scroll-trigger" href="#about">个人资料</a></h4>
+          </li>
+          <li class="nav-item">
+            <h4><a class="nav-link js-scroll-trigger" href="#recent-sell">最近交易</a></h4>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid p-0">
+      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
+        <div class="my-auto">
+          <h2 class="mb-0">{{ user.family_name }}
+            <span class="text-primary">{{ user.given_name  }}</span>
+          </h2>
+          <div class="row">
+            &nbsp
+          </div>
+          <h3><a class="lead mb-5" style="color:#212529;" href="{% url 'change_profile' %}"><i class="fas fa-cog">点击修改</i></a></h3>
+          <div class="row">
+            &nbsp
+          </div>
+          <div class="subheading mb-5">{{ user.phone }} ·
+            <a href="mailto:name@email.com">{{ user.mail }}</a>
+          </div>
+          <p class="lead mb-5">{{ user.description }}</p>
+        </div>
+      </section>
+
+      <hr class="m-0">
+
+      <section class="content-section" id="recent-sell">
+      <div class="container">
+        <div class="my-auto">
+          <h2 class="mb-5">最近交易&nbsp&nbsp</h2>
+          <h4 class="mb-5">累积发布{{ user.nums }}次交易</h4>
+          <h3><a class="lead mb-5" style="color:#212529;" href="{% url 'add_goods' %}"><i class="fas fa-plus-circle">发布交易</i></a></h3>
+          <div class="row">
+            &nbsp
+          </div>
+          <h3 class="mb-0">{{ user.family_name }}{{ user.given_name }}</h3>
+          <div class="subheading mb-3">最近的交易</div>
+        </div>
+        <div class="row no-gutters">
+          {% if goods_list %}
+          {% for goods in goods_list %}
+          <div class="col-lg-6">
+            <a class="portfolio-item" href="{% url 'my_goods' goods.id %}">
+              <span class="caption">
+                <span class="caption-content">
+                  <h2>{{ goods.name }}</h2>
+                  {% ifequal goods.typ 0 %}
+                  <p class="mb-0">出售</p>
+                  {% endifequal %}
+                  {% ifequal goods.typ 1 %}
+                  <p class="mb-0">求购</p>
+                  {% endifequal %}
+                  {% ifequal goods.typ 2 %}
+                  <p class="mb-0">赠送</p>
+                  {% endifequal %}
+                  <p class="mb-0">交易地点：{{ goods.trade_location }}</p>
+                  <p class="mb-0">价格：{{ goods.price }}</p>
+                </span>
+              </span>
+              {% if goods.picture %}
+                <img class="img-fluid" src="{{ goods.picture.url }}" alt="">
+              {% else %}
+                <img class="img-fluid" src="{% static 'img/default_goods.jpg' %}" alt="">
+              {% endif %}
+            </a>
+          </div>
+          {% endfor %}
+          {% endif %}
+
+        </div>
+      </div>
+    </section>
+    
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for this template -->
+
+  </body>
+
+</html>

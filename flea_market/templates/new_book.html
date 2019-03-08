@@ -1,0 +1,282 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>贰经人手&nbsp岁月拾遗</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/business-casual.css' %}" rel="stylesheet">
+    <link href="{% static 'css/stylish-portfolio.css' %}" rel="stylesheet">
+    <link href="{% static 'css/resume.css' %}" rel="stylesheet">
+    <link href="{% static 'css/agency.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/croppie.css' %}">
+
+    <style>
+      .demo{width:360px; margin:auto auto auto auto}
+
+      button,
+      a.btn {
+          background-color: #189094;
+          color: white;
+          padding: 10px 15px;
+          border-radius: 3px;
+          border: 1px solid rgba(255, 255, 255, 0.5);
+          font-size: 16px;
+          cursor: pointer;
+          text-decoration: none;
+          text-shadow: none;
+      }
+      button:focus {
+          outline: 0;
+      }
+
+      .file-btn {
+          position: relative;
+      }
+      .file-btn input[type="file"] {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+      }
+
+      .actions {
+          padding: 5px 0;
+      }
+      .actions button {
+          margin-right: 5px;
+      }
+      .crop{display:none}
+    </style>
+    
+  </head>
+
+  <body id="page-top">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+      <h4><a href="/"><i class="fas fa-home">&nbsp贰&nbsp拾</i></a></h4>
+      <a class="navbar-brand js-scroll-trigger" href="{% url 'homepage' %}#tengfei">
+        <h4><span class="d-block d-lg-none">腾飞服务</span></h4>
+        <span class="d-none d-lg-block">
+          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'img/tengfei.jpg' %}" alt="">
+        </span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <h4><a class="nav-link js-scroll-trigger" href="{% url 'book' 0 %}">图书借阅</a></h4>
+          </li>
+          <li class="nav-item">
+            <h4><a class="nav-link js-scroll-trigger" href="{% url 'book' 0 %}">旧书捐赠</a></h4>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+<div class="container">
+  <div class="row">
+	<div class="col-lg-12 text-center">
+	  <h3>&nbsp</h3>
+	  <h2 class="section-heading text-uppercase">增添图书</h2>
+	  <h3 class="section-subheading text-muted">增添一本新的图书</h3>
+	</div>
+  </div>
+  <div class="container">
+
+    <div class="row">
+                
+    <div class="demo">
+		<div class="actions">
+            <div class="crop">
+				<div id="upload-demo"></div>
+				<button id="upload-result" class="upload-result" data-toggle="modal" href="#detail">裁剪以完成图片上传</button>
+			</div>
+			<!--<div id="result"></div>-->
+        </div>
+	</div>
+
+    <form method="post" action="{% url 'new_book' %}" id="contactForm" name="sentMessage" enctype="multipart/form-data">
+    {% csrf_token %}
+
+      <div class="form-group">
+        <label for="typ">选择图书类型</label>
+        <select class="form-control" name="typ_id">
+          <option value="0">借阅</option>
+          <option value="1">赠送</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input class="form-control" id="name" type="text" name="name" placeholder="图书名称 *" required="required">
+        <p class="help-block text-danger"></p>
+      </div>
+      <div class="form-group">
+        <input class="form-control" id="nums" type="number" name="nums" placeholder="图书数目 *" required="required">
+        <p class="help-block text-danger"></p>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" id="description" name="description" placeholder="图书描述 *" required="required" rows=6></textarea>
+        <p class="help-block text-danger"></p>
+      </div>
+      	<div id="result"></div>
+
+      <div class="row">
+       	<div class="demo">
+          <div class="actions">
+            <button class="file-btn">
+              <span>上传</span>
+              <input type="file" id="upload" value="选择图片文件" name="picture"/>
+            </button>
+          </div>
+        </div>
+
+        <div class="portfolio-modal modal fade" id="detail" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <div class="col-lg-8 mx-auto">
+                  <center><canvas id="canvas" width="600" height="600" type="hidden"></canvas></center>
+                  <ul class="list-inline">
+                    <h5 class="section-subheading text-muted">&nbsp</h5>
+                    <h5 class="section-subheading text-muted">没有图片？</h5>
+                    <h5 class="section-subheading text-muted">再试一次吧</h5>
+                  </ul>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fas fa-times"></i>
+                    完成并关闭</button>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <button class="btn btn-primary " type="submit">点击提交</button>
+      </div>
+
+   	</form>
+	</div>
+   
+  </div>
+</div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for this template -->
+    <!--<script src="../static/js/agency.js"></script>-->
+
+    <script src="{% static 'js/jqBootstrapValidation.js' %}"></script>
+    <!--<script src="../static/mail/contact_me.js"></script>-->
+
+    <script src="{% static 'js/croppie.min.js' %}"></script>
+
+    <script>
+    $(function(){
+      var $uploadCrop;
+
+        function readFile(input) {
+          if (input.files && input.files[0]) {
+                  var reader = new FileReader();
+                  
+                  reader.onload = function (e) {
+                    $uploadCrop.croppie('bind', {
+                      url: e.target.result
+                    });
+                    $('.upload-demo').addClass('ready');
+                      // $('#blah').attr('src', e.target.result);
+                  }
+                  
+                  reader.readAsDataURL(input.files[0]);
+              }
+              else {
+                alert("Sorry - you're browser doesn't support the FileReader API");
+            }
+        }
+
+        $uploadCrop = $('#upload-demo').croppie({
+          viewport: {
+            width: 320,
+            height: 320,
+            type: 'square'
+          },
+          boundary: {
+            width: 360,
+            height: 360
+          }
+        });
+
+        $('#upload').on('change', function () { 
+          $(".crop").show();
+          readFile(this);
+        });
+        
+        $('.upload-result').on('click', function (ev) {
+          $uploadCrop.croppie('result', 'canvas').then(function (resp) {
+            popupResult({
+              src: resp
+            });
+          });
+        });
+        
+      function popupResult(result) {
+        var html;
+        if (result.html) {
+          html = result.html;
+        }
+        if (result.src) {
+        	img = new Image();
+        	img.src = result.src;
+        	
+        	var canvas = document.getElementById('canvas');
+			var ctx = canvas.getContext('2d');
+			ctx.drawImage(img, 0, 0, 600, 600);
+			pic = canvas.toDataURL("image/jpg");
+			pic = pic.substr(22);
+
+			html = '<input type="hidden" name="base64" value="' + pic + '"/>';
+		
+        }
+        $("#result").html(html);
+      }
+    });
+    </script>
+
+  </body>
+
+</html>

@@ -1,0 +1,290 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>贰经人手&nbsp岁月拾遗</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/bg.css' %}" rel="stylesheet">
+    <link href="{% static 'css/agency.css' %}" rel="stylesheet">
+    
+
+  </head>
+
+  <body id="page-top">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="/">贰&nbsp拾</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav text-uppercase ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="/#services">二手服务</a>
+            </li>
+            <!--
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="/#tengfei">腾飞服务</a>
+            </li>
+            -->
+            {% if is_login %}
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="/#team">关于我们</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger">&nbsp</a>
+            </li>
+            {% if is_login %}
+            {% if count %}
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <span class="badge badge-danger">{{ count }}+</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown" style="background-color: #212529">
+                {% for message in message_unread %}
+                <a class="nav-link js-scroll-trigger" id="message{{message.id}}" href="{% url 'comment' message.goods.id %}">{{ message.content }}</a>
+                {% endfor %}
+              </div>
+            </li>
+            {% endif %}
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user-circle fa-fw"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown" style="background-color: #212529">
+                <a class="nav-link js-scroll-trigger" href="{% url 'user_center' %}">个人中心</a>
+                <div class="dropdown-divider"></div>
+                <a class="nav-link js-scroll-trigger" href="/logout">退出</a>
+              </div>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="/register">注册</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="/login">登录</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+      <div class="page-section about-heading">
+        
+          {% if goods.picture %}
+          <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{{ goods.picture.url }}" alt="">
+          {% else %}
+          <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'img/default_goods.jpg' %}" alt="">
+          {% endif %}
+        </div>
+
+          <div class="container">
+            <div class="row">
+              <div class="col-xl-9 mx-auto">
+                <div class="cta-inner text-center rounded">
+                  <h4>{{ goods.name }}</h4>
+                  &nbsp
+                  <h4>交易地点：{{ goods.trade_location }}</h4>
+                  &nbsp
+                  <h4>价格：{{ goods.price }}</h4>
+                  &nbsp
+                  <h4>发布时间：{{ goods.publish_time }}</h4>
+                  &nbsp
+                  <p class="mb-0">{{ goods.description }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              &nbsp
+            </div>
+          </div>
+
+      <div class="container">
+        {% if comment_dic %}
+          {% for comment, i in comment_dic.items %}
+            {% ifequal i 0 %}
+              <div class="row">
+                <div class="col-md-4">
+                  &nbsp
+                </div>
+                <div class="col-md-8">
+                  <div class="bg-faded p-5 rounded">
+
+                    <div class=row>
+                      <a data-toggle="modal" href="#message{{ comment.user.id }}" style="color: black;"><p class="mb-0">{{ comment.content }}</p></a>
+                    </div>
+                    <div class="row">
+                      &nbsp
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        &nbsp
+                      </div>
+                      <div class="col-md-4">
+                        <h5><a href="{% url 'profile' comment.user.id %}" style="color: #696969;">{{ comment.user.family_name }}{{ comment.user.given_name }}</a></h5>
+                        <h5>{{ comment.comment_time }}</h5>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                &nbsp
+              </div>
+            {% endifequal %}
+            {% ifequal i 1 %}
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="bg-faded p-5 rounded">
+
+                    <div class=row>
+                      <a data-toggle="modal" href="#message{{ comment.user.id }}" style="color: black;"><p class="mb-0">{{ comment.content }}</p></a>
+                    </div>
+                    <div class="row">
+                      &nbsp
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <h5><a href="{% url 'profile' comment.user.id %}" style="color: #696969;">{{ comment.user.family_name }}{{ comment.user.given_name }}</a></h5>
+                        <h5>{{ comment.comment_time }}</h5>
+                      </div>
+                      <div class="col-md-4">
+                        &nbsp
+                      </div>
+                    </div>
+                  
+                  </div>
+                </div>
+                <div class="col-md-4">
+                &nbsp
+                </div>
+              </div>
+              <div class="row">
+                &nbsp
+              </div>
+            {% endifequal %}
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <section>
+        <div class="container">
+          <div>&nbsp<hr class="m-0"></div>
+          <div class="row">
+            &nbsp
+          </div>
+          <center>
+            <button class="btn btn-primary btn-xl" data-toggle="modal" href="#comment" >&nbsp点&nbsp击&nbsp留&nbsp言&nbsp</button>
+            <div class="row">
+              &nbsp
+            </div>
+            <form method="post" action="{% url 'del_goods' goods.id %}">
+              <input type="hidden" name="deler" value="1">
+              <button class="btn btn-primary btn-xl text-danger" type="submit" href="{% url 'del_goods' goods.id %}">&nbsp点&nbsp击&nbsp删&nbsp除&nbsp</button>
+            </form>
+          </center>
+        </div>
+      </section>
+
+      <form method="post" action="{% url 'add_comment' goods.id %}" id="commentForm" name="sentMessage" enctype="multipart/form-data">
+      {% csrf_token %}
+        <div class="portfolio-modal modal fade" id="comment" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+              <div class="lr">
+                <div class="rl"></div>
+              </div>
+            </div>
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-8 mx-auto">
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <textarea class="form-control" id="description" name="comment" placeholder="商品描述 *" required="required" data-validation-required-message="Please enter a message." rows=6></textarea>
+                      <input type="hidden" name="can_comment" value="1"></div>
+                    </div>
+                    <button class="btn btn-primary btn-xl" type="submit">
+                      <h5>点击留言</h5>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    {% if comment_dic %}
+    {% for comment, i in comment_dic.items %}
+    <form method="post" action="{% url 'add_message' comment.user.id goods.id %}" id="messageForm" name="sentMessage" enctype="multipart/form-data">
+      {% csrf_token %}
+        <div class="portfolio-modal modal fade" id="message{{ comment.user.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+              <div class="lr">
+                <div class="rl"></div>
+              </div>
+            </div>
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-8 mx-auto">
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <textarea class="form-control" id="description" name="message" placeholder="你的回复 *" required="required" data-validation-required-message="Please enter a message." rows=6></textarea>
+                      <input type="hidden" name="can_comment" value="1"></div>
+                    </div>
+                    <button class="btn btn-primary btn-xl" type="submit">
+                      <h5>点击回复</h5>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    {% endfor %}
+    {% endif %}
+    
+      
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="{% static 'js/agency.js' %}"></script>
+
+  </body>
+
+</html>

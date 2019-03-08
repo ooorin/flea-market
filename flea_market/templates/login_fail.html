@@ -1,0 +1,64 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>贰经人手&nbsp岁月拾遗</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+
+    <!-- Bootstrap core CSS-->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+
+  </head>
+
+  <body class="bg-dark">
+
+    <div class="container">
+      <div class="card card-login mx-auto mt-5">
+        <div class="form-group">&nbsp</div>
+        <div class="text-left mb-4">&nbsp</div>
+        <div class="card-body">
+          <div class="text-center mb-4">
+            <h4>账户或密码错误</h4>
+            <h4>&nbsp</h4>
+            <h5>请仔细检查你输入的账户和密码</h5>
+          </div>
+          <div class="text-center mb-4">
+            <h4>&nbsp</h4>
+          </div>
+          <div class="text-center">
+            <a class="d-block small mt-3" style="color:#212529;" href="/login">重新登录?</a>
+          </div>
+          <div class="text-center">
+            <a class="d-block small" style="color:#212529;" href="{% url 'forget_password' %}">忘记密码?</a>
+          </div>
+          <div class="text-center">
+            <a class="d-block small" style="color:#212529;" href="/">返回首页</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+  </body>
+
+</html>
